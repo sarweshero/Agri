@@ -87,7 +87,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'backend.wsgi.application'
+WSGI_APPLICATION = 'agri.wsgi.application'
+
 
 JAZZMIN_SETTINGS = {
     "site_title": "Admin",
