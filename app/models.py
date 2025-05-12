@@ -36,3 +36,64 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.phone_number
+
+class landprep:
+    date = models.DateField()
+    fertilizer = models.CharField(max_length=100)
+    quantity = models.IntegerField()
+    photo = models.ImageField(upload_to='landprep_photos/')
+    belongs_to = models.IntegerField()
+    def __str__(self):
+        return f"Land Preparation on {self.date} with {self.fertilizer}"
+class transplanting:
+    date = models.DateField()
+    seed_variety = models.CharField(max_length=100)
+    quantity = models.IntegerField()
+    photo = models.ImageField(upload_to='transportation_photos/')
+    belongs_to = models.IntegerField()
+    def __str__(self):
+        return f"Transplanting on {self.date} with {self.seed_variety}"
+    
+class fertilizer:
+    date = models.DateField()
+    application_type = models.CharField(max_length=100)
+    quantity = models.IntegerField()
+    photo = models.ImageField(upload_to='fertilizer_photos/')
+    belongs_to = models.IntegerField()
+    def __str__(self):
+        return f"Fertilizer Application on {self.date} with {self.application_type}"
+class harverst:
+    seed_variety = models.CharField(max_length=100)
+    date = models.DateField()
+    photo = models.ImageField(upload_to='harvest_photos/')
+    belongs_to = models.IntegerField()
+    def __str__(self):
+        return f"Harvest on {self.date} with {self.seed_variety}"
+class packaging:
+    seed_variety = models.CharField(max_length=100)
+    date = models.DateField()
+    quantity = models.IntegerField()
+    photo = models.ImageField(upload_to='packaging_photos/')
+    belongs_to = models.IntegerField()
+    def __str__(self):
+        return f"Packaging on {self.date} with quantity {self.quantity}"
+    
+class Procurement:
+    farmer_name = models.CharField(max_length=100)
+    seed_variety = models.CharField(max_length=100)
+    lot_id = models.CharField(max_length=100)
+    date = models.DateField()
+    quantity = models.IntegerField()
+    price = models.IntegerField()
+    photo = models.ImageField(upload_to='procurement_photos/')
+    belongs_to = models.IntegerField()
+    def __str__(self):
+        return f"Procurement of {self.seed_variety} from {self.farmer_name} on {self.date}"
+class packing:
+    lot_id = models.CharField(max_length=100)
+    date = models.DateField()
+    quantity = models.IntegerField()
+    photo = models.ImageField(upload_to='packing_photos/')
+    belongs_to = models.IntegerField()
+    def __str__(self):
+        return f"Packing on {self.date} with quantity {self.quantity}"
