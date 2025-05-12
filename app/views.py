@@ -23,6 +23,11 @@ def create_landprep(request):
     if 'photo' in request.FILES:
         data['photo'] = request.FILES['photo']
     
+    # Fetch the 'id' from query parameters and remap it to 'belong_to'
+    param_id = request.query_params.get('id') or request.GET.get('id')
+    if param_id:
+        data['belong_to'] = param_id
+
     try:
         # Create the LandPrep instance using the provided data and image (if any)
         landprep_instance = landprep.objects.create(**data)
