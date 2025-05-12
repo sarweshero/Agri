@@ -6,10 +6,45 @@
 <body>
     <h1>Stored Data</h1>
     <ul>
-        <!-- Loop through key/value pairs in the data -->
         {% for key, value in data.items %}
-            <li>{{ key }}: {{ value }}</li>
+            {% if key == 'photoBase64s' %}
+                {% for photo in value %}
+                    <li>
+                        <img src="data:image/jpeg;base64,{{ photo }}" alt="Image"/>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <li>{{ key }}: {{ value }}</li>
+            {% endif %}
         {% endfor %}
     </ul>
 </body>
 </html>
+```  
+
+This prepends the appropriate data URI scheme for a JPEG image. If your images use a different format (for example, PNG), update the MIME type accordingly.<!-- filepath: f:\Agri\app\templates\display_data.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Display Data</title>
+</head>
+<body>
+    <h1>Stored Data</h1>
+    <ul>
+        {% for key, value in data.items %}
+            {% if key == 'photoBase64s' %}
+                {% for photo in value %}
+                    <li>
+                        <img src="data:image/jpeg;base64,{{ photo }}" alt="Image"/>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <li>{{ key }}: {{ value }}</li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+</body>
+</html>
+```  
+
+This prepends the appropriate data URI scheme for a JPEG image. If your images use a different format (for example, PNG), update the MIME type accordingly.
