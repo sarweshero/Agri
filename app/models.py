@@ -37,7 +37,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.phone_number
 
-class landprep:
+class landprep(models.Model):
     date = models.DateField()
     fertilizer = models.CharField(max_length=100)
     quantity = models.IntegerField()
@@ -45,7 +45,7 @@ class landprep:
     belongs_to = models.IntegerField()
     def __str__(self):
         return f"Land Preparation on {self.date} with {self.fertilizer}"
-class transplanting:
+class transplanting(models.Model):
     date = models.DateField()
     seed_variety = models.CharField(max_length=100)
     quantity = models.IntegerField()
@@ -54,7 +54,7 @@ class transplanting:
     def __str__(self):
         return f"Transplanting on {self.date} with {self.seed_variety}"
     
-class fertilizer:
+class fertilizer(models.Model):
     date = models.DateField()
     application_type = models.CharField(max_length=100)
     quantity = models.IntegerField()
@@ -62,14 +62,14 @@ class fertilizer:
     belongs_to = models.IntegerField()
     def __str__(self):
         return f"Fertilizer Application on {self.date} with {self.application_type}"
-class harverst:
+class harverst(models.Model):
     seed_variety = models.CharField(max_length=100)
     date = models.DateField()
     photo = models.ImageField(upload_to='harvest_photos/')
     belongs_to = models.IntegerField()
     def __str__(self):
         return f"Harvest on {self.date} with {self.seed_variety}"
-class packaging:
+class packaging(models.Model):
     seed_variety = models.CharField(max_length=100)
     date = models.DateField()
     quantity = models.IntegerField()
@@ -78,7 +78,7 @@ class packaging:
     def __str__(self):
         return f"Packaging on {self.date} with quantity {self.quantity}"
     
-class Procurement:
+class Procurement(models.Model):
     farmer_name = models.CharField(max_length=100)
     seed_variety = models.CharField(max_length=100)
     lot_id = models.CharField(max_length=100)
@@ -89,7 +89,7 @@ class Procurement:
     belongs_to = models.IntegerField()
     def __str__(self):
         return f"Procurement of {self.seed_variety} from {self.farmer_name} on {self.date}"
-class packing:
+class packing(models.Model):
     lot_id = models.CharField(max_length=100)
     date = models.DateField()
     quantity = models.IntegerField()

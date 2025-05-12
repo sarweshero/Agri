@@ -7,9 +7,33 @@ from django.http import JsonResponse, HttpResponse, Http404
 from django.views.decorators.csrf import csrf_exempt
 from django.urls import reverse
 from django.shortcuts import render
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from icecream import ic
 from django.core.cache import cache  # New import for shared storage
 from icecream import ic  # Assuming you are using icecream for debugging
-
+from .models import *  # Import your models including LandPrep
+@api_view(['POST'])
+def create_landprep(request):
+    # Make a mutable copy of the incoming data
+    data = request.data.copy()
+    
+    # If your model has an image field (e.g., 'photo'), handle the uploaded image:
+    if 'photo' in request.FILES:
+        data['photo'] = request.FILES['photo']
+    
+    try:
+        # Create the LandPrep instance using the provided data and image (if any)
+        landprep_instance = landprep.objects.create(**data)
+        return Response({
+            'message': 'LandPrep instance created successfully',
+            'id': landprep_instance.id
+        }, status=status.HTTP_201_CREATED)
+    except Exception as e:
+        ic(f"Error creating LandPrep instance: {e}")
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
 @csrf_exempt
 def generate_qr(request):
     if request.method == 'POST':
