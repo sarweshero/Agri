@@ -27,7 +27,7 @@ def generate_qr(request):
 
             # Generate a UUID key and store the parsed data in the cache (shared storage)
             data_id = str(uuid.uuid4())
-            cache.set(data_id, data, timeout=6000)  # Store data for 100 minutes
+            cache.set(data_id, data)
 
             # Build URL to display_data view (make sure 'display_data' URL pattern is defined)
             try:
