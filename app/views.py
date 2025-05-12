@@ -5,6 +5,7 @@ import uuid
 import qrcode
 import base64
 from io import BytesIO
+from icecream import ic
 from django.views.decorators.csrf import csrf_exempt  # added import
 
 # Create your views here.
@@ -15,6 +16,7 @@ def generate_qr(request):
         try:
             # Retrieve form data and store in session with a UUID key
             form_data = request.POST.dict()
+            ic(form_data)
             data_id = str(uuid.uuid4())
             request.session[data_id] = form_data
 
