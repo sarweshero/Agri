@@ -10,33 +10,52 @@ from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from django.core.files.base import ContentFile
+import datetime
+from django.core.cache import cache
 from icecream import ic
-from django.core.cache import cache  # New import for shared storage
-from icecream import ic  # Assuming you are using icecream for debugging
-from .models import *  # Import your models including LandPrep
+from .models import * 
+
+
 @api_view(['POST'])
 def create_landprep(request):
-    # Make a mutable copy of the incoming data
     data = request.data.copy()
-    
-    # If your model has an image field (e.g., 'photo'), handle the uploaded image:
-    if 'photo' in request.FILES:
-        data['photo'] = request.FILES['photo']
-    
-    # Fetch the 'id' from query parameters and remap it to 'belong_to'
-    param_id = request.query_params.get('id') or request.GET.get('id')
-    if param_id:
-        data['belong_to'] = param_id
+
+    # Map frontend fields to model fields
+    date_str = data.get('selectedDate')
+    fertilizer = data.get('fertilizer')
+    quantity = data.get('quantity')
+    photo_base64s = data.get('photoBase64s', [])
+
+    # Convert date string to date object
+    try:
+        date = datetime.datetime.fromisoformat(date_str).date()
+    except Exception as e:
+        return Response({'error': f'Invalid date format: {e}'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Use only the first photo (if multiple)
+    photo_file = None
+    if photo_base64s and isinstance(photo_base64s, list):
+        try:
+            photo_data = photo_base64s[0]
+            format, imgstr = 'jpeg', photo_data
+            file_name = f'landprep_{datetime.datetime.now().strftime("%Y%m%d%H%M%S")}.jpg'
+            photo_file = ContentFile(base64.b64decode(imgstr), name=file_name)
+        except Exception as e:
+            return Response({'error': f'Invalid image data: {e}'}, status=status.HTTP_400_BAD_REQUEST)
 
     try:
-        # Create the LandPrep instance using the provided data and image (if any)
-        landprep_instance = landprep.objects.create(**data)
+        landprep_instance = landprep.objects.create(
+            date=date,
+            fertilizer=fertilizer,
+            quantity=int(quantity),
+            photo=photo_file
+        )
         return Response({
             'message': 'LandPrep instance created successfully',
             'id': landprep_instance.id
         }, status=status.HTTP_201_CREATED)
     except Exception as e:
-        ic(f"Error creating LandPrep instance: {e}")
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
 @csrf_exempt
