@@ -45,12 +45,14 @@ def create_landprep(request):
             return Response({'error': f'Invalid image data: {e}'}, status=status.HTTP_400_BAD_REQUEST)
 
     try:
+        ic("Creating landprep instance with date:", date, "fertilizer:", fertilizer, "quantity:", quantity)
         landprep_instance = landprep.objects.create(
             date=date,
             fertilizer=fertilizer,
             quantity=int(quantity),
             photo=photo_file
         )
+        ic("Created landprep instance:", landprep_instance)
         return Response({
             'message': 'LandPrep instance created successfully',
             'id': landprep_instance.id
