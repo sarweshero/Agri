@@ -23,7 +23,7 @@ def generate_qr(request):
             except json.JSONDecodeError:
                 return JsonResponse({'error': 'Invalid JSON received'}, status=400)
 
-            ic(data)  # Use icecream to inspect the parsed data dictionary
+            # ic(data)  # Use icecream to inspect the parsed data dictionary
 
             # Generate a UUID key and store the parsed data in the cache (shared storage)
             data_id = str(uuid.uuid4())
