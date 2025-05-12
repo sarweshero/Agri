@@ -63,9 +63,9 @@ MIDDLEWARE = [
 
 # Custom token authentication settings for Django REST Framework
 REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'api.authentication.CustomTokenAuthentication',
-    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
 
 }
 
