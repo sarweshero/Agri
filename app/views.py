@@ -15,8 +15,8 @@ def generate_qr(request):
     if request.method == 'POST':
         try:
             # Retrieve form data and store in session with a UUID key
-            form_data = request.POST.dict()
-            ic(form_data)
+            form_data = ic(request.POST.dict())
+            
             data_id = str(uuid.uuid4())
             request.session[data_id] = form_data
 
