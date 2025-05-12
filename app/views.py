@@ -27,7 +27,7 @@ def create_landprep(request):
     param_id = request.query_params.get('id') or request.GET.get('id')
     if param_id:
         data['belongs_to'] = param_id
-
+    ic(f"Received data for LandPrep: {data}")
     try:
         # Create the LandPrep instance using the provided data and image (if any)
         landprep_instance = landprep.objects.create(**data)
