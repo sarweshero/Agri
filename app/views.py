@@ -5,9 +5,11 @@ import uuid
 import qrcode
 import base64
 from io import BytesIO
+from django.views.decorators.csrf import csrf_exempt  # added import
 
 # Create your views here.
 
+@csrf_exempt  # added decorator to bypass CSRF for POST requests
 def generate_qr(request):
     if request.method == 'POST':
         try:
