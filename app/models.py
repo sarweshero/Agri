@@ -39,7 +39,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
 class landprep(models.Model):
     date = models.DateField()
-    fertilizer = models.CharField(max_length=100)
+    fertilizer = models.CharField()
     quantity = models.IntegerField()
     photo = models.ImageField(upload_to='landprep_photos/')
     belongs_to = models.IntegerField()
