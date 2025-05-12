@@ -19,6 +19,7 @@ def generate_qr(request):
             
             data_id = str(uuid.uuid4())
             request.session[data_id] = form_data
+            request.session.save()  # ensure session data is persisted
 
             # Build URL to display_data view
             url = request.build_absolute_uri(reverse('display_data', args=[data_id]))
