@@ -46,7 +46,7 @@ def generate_qr(request):
         return HttpResponse("Only POST method is allowed", status=405)
 
 def display_data(request, data_id):
-    data = request.session.get(data_id)
-    if not data:
+    data = request.session.get(data_id, None)  # use None as a default
+    if data is None:
         raise Http404("Data not found")
     return render(request, 'display_data.html', {'data': data})
