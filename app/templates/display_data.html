@@ -2,32 +2,113 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Display Data</title>
+    <title>Crop Management Data</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #2e7d32;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-header {
+            background: #2e7d32;
+            color: white;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .card-body {
+            padding: 15px;
+        }
+        .card-body ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .card-body li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .card-body li:last-child {
+            border-bottom: none;
+        }
+        .field-name {
+            font-weight: 600;
+            color: #555;
+            margin-right: 5px;
+        }
+        .field-value {
+            color: #333;
+        }
+        .card-image {
+            width: 100%;
+            max-height: 200px;
+            object-fit: cover;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .empty-card {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #999;
+            font-style: italic;
+            min-height: 150px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Stored Data</h1>
-    <ul>
-        {% for section, value in data.items %}
-            <li>
-                <h2>{{ section|capfirst }}</h2>
-                {% if value %}
-                    <ul>
-                        {% for key, field in value.items %}
-                            {% if key == "photo" and field %}
-                                <li>
-                                    <strong>{{ key|capfirst }}:</strong>
-                                    <img src="{{ field }}" alt="Image" style="max-width:200px;"/>
-                                </li>
-                            {% else %}
-                                <li><strong>{{ key|capfirst }}:</strong> {{ field }}</li>
-                            {% endif %}
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <em>No data</em>
-                {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
+    <div class="container">
+        <h1>Crop Management Data</h1>
+        
+        <div class="cards-container">
+            {% for section, value in data.items %}
+                <div class="card">
+                    <div class="card-header">{{ section|capfirst }}</div>
+                    <div class="card-body">
+                        {% if value %}
+                            {% for key, field in value.items %}
+                                {% if key == "photo" and field %}
+                                    <img class="card-image" src="{{ field }}" alt="Photo" />
+                                {% elif key != "id" and key != "belongs_to" %}
+                                    <div class="field">
+                                        <span class="field-name">{{ key|capfirst }}:</span>
+                                        <span class="field-value">{{ field }}</span>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <div class="empty-card">No data available</div>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 </body>
 </html>
