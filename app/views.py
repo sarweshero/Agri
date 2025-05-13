@@ -211,9 +211,9 @@ def display_data(request):
         packing_instance = packing.objects.filter(belongs_to=param_id).order_by('-id').first()
 
         data = {
-            'landprep': LandPrepSerializer(landprep_instance).data if landprep_instance else None,
+            'landpreparation': LandPrepSerializer(landprep_instance).data if landprep_instance else None,
             'transplanting': TransplantingSerializer(transplanting_instance).data if transplanting_instance else None,
-            'fertilizer': FertilizerSerializer(fertilizer_instance).data if fertilizer_instance else None,
+            'fertilizer/pesticide': FertilizerSerializer(fertilizer_instance).data if fertilizer_instance else None,
             'harverst': HarverstSerializer(harverst_instance).data if harverst_instance else None,
             'packaging': PackagingSerializer(packaging_instance).data if packaging_instance else None,
             'procurement': ProcurementSerializer(procurement_instance).data if procurement_instance else None,

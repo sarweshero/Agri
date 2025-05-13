@@ -1,4 +1,5 @@
 {% load static %}
+{% get_media_prefix as MEDIA_PREFIX %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,8 +22,8 @@
             margin-bottom: 30px;
         }
         .cards-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            display: flex;
+            flex-direction: column;
             gap: 20px;
         }
         .card {
@@ -31,31 +32,33 @@
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
+            width: 100%;
         }
         .card:hover {
             transform: translateY(-5px);
         }
         .card-header {
-            background: #2e7d32;
-            color: white;
+            color: #2e7d32;
             padding: 15px;
             font-size: 18px;
             font-weight: 700;
+            border-bottom: 1px solid #eee;
         }
         .card-body {
             padding: 15px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
         }
-        .card-body ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
+        .card-image-container {
+            flex: 0 0 200px;
+            margin-right: 20px;
         }
-        .card-body li {
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
+        .card-details {
+            flex: 1;
         }
-        .card-body li:last-child {
-            border-bottom: none;
+        .field {
+            margin-bottom: 10px;
         }
         .field-name {
             font-weight: 600;
@@ -67,10 +70,10 @@
         }
         .card-image {
             width: 100%;
-            max-height: 200px;
+            height: 150px;
             object-fit: cover;
             display: block;
-            margin-bottom: 10px;
+            border-radius: 8px;
         }
         .empty-card {
             display: flex;
@@ -78,7 +81,7 @@
             align-items: center;
             color: #999;
             font-style: italic;
-            min-height: 150px;
+            min-height: 100px;
         }
     </style>
 </head>
@@ -92,16 +95,21 @@
                     <div class="card-header">{{ section|capfirst }}</div>
                     <div class="card-body">
                         {% if value %}
-                            {% for key, field in value.items %}
-                                {% if key == "photo" and field %}
-                                    <img class="card-image" src="{{ field }}" alt="Photo" />
-                                {% elif key != "id" and key != "belongs_to" %}
-                                    <div class="field">
-                                        <span class="field-name">{{ key|capfirst }}:</span>
-                                        <span class="field-value">{{ field }}</span>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
+                            {% if value.photo %}
+                                <div class="card-image-container">
+                                    <img class="card-image" src="{{ MEDIA_PREFIX }}{{ value.photo|cut:'/media/' }}" alt="Photo" />
+                                </div>
+                            {% endif %}
+                            <div class="card-details">
+                                {% for key, field in value.items %}
+                                    {% if key != "photo" and key != "id" and key != "belongs_to" %}
+                                        <div class="field">
+                                            <span class="field-name">{{ key|capfirst }}:</span>
+                                            <span class="field-value">{{ field }}</span>
+                                        </div>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
                         {% else %}
                             <div class="empty-card">No data available</div>
                         {% endif %}
