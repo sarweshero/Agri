@@ -22,7 +22,7 @@ def create_landprep(request):
     param_id = request.query_params.get('id') or request.GET.get('id')
     if param_id:
         data['belongs_to'] = param_id
-    ic(f"Received data for LandPrep: {data}")
+    #ic(f"Received data for LandPrep: {data}")
     instance = landprep.objects.filter(belongs_to=param_id).first()
     if instance:
         serializer = LandPrepSerializer(instance, data=data, partial=True)
@@ -44,7 +44,7 @@ def create_transplanting(request):
     param_id = request.query_params.get('id') or request.GET.get('id')
     if param_id:
         data['belongs_to'] = param_id
-    ic(f"Received data for Transplanting: {data}")
+    #ic(f"Received data for Transplanting: {data}")
     instance = transplanting.objects.filter(belongs_to=param_id).first()
     if instance:
         serializer = TransplantingSerializer(instance, data=data, partial=True)
@@ -66,7 +66,7 @@ def create_fertilizer(request):
     param_id = request.query_params.get('id') or request.GET.get('id')
     if param_id:
         data['belongs_to'] = param_id
-    ic(f"Received data for Fertilizer: {data}")
+    #ic(f"Received data for Fertilizer: {data}")
     instance = fertilizer.objects.filter(belongs_to=param_id).first()
     if instance:
         serializer = FertilizerSerializer(instance, data=data, partial=True)
@@ -88,7 +88,7 @@ def create_harverst(request):
     param_id = request.query_params.get('id') or request.GET.get('id')
     if param_id:
         data['belongs_to'] = param_id
-    ic(f"Received data for Harverst: {data}")
+    #ic(f"Received data for Harverst: {data}")
     instance = harverst.objects.filter(belongs_to=param_id).first()
     if instance:
         serializer = HarverstSerializer(instance, data=data, partial=True)
@@ -110,7 +110,7 @@ def create_packaging(request):
     param_id = request.query_params.get('id') or request.GET.get('id')
     if param_id:
         data['belongs_to'] = param_id
-    ic(f"Received data for Packaging: {data}")
+    #ic(f"Received data for Packaging: {data}")
     instance = packaging.objects.filter(belongs_to=param_id).first()
     if instance:
         serializer = PackagingSerializer(instance, data=data, partial=True)
@@ -132,7 +132,7 @@ def create_procurement(request):
     param_id = request.query_params.get('id') or request.GET.get('id')
     if param_id:
         data['belongs_to'] = param_id
-    ic(f"Received data for Procurement: {data}")
+    #ic(f"Received data for Procurement: {data}")
     instance = Procurement.objects.filter(belongs_to=param_id).first()
     if instance:
         serializer = ProcurementSerializer(instance, data=data, partial=True)
@@ -154,7 +154,7 @@ def create_packing(request):
     param_id = request.query_params.get('id') or request.GET.get('id')
     if param_id:
         data['belongs_to'] = param_id
-    ic(f"Received data for Packing: {data}")
+    # ic(f"Received data for Packing: {data}")
     instance = packing.objects.filter(belongs_to=param_id).first()
     if instance:
         serializer = PackingSerializer(instance, data=data, partial=True)
