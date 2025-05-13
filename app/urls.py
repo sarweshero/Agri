@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('create_landprep/', views.create_landprep, name='create_landprep'),
@@ -13,3 +15,7 @@ urlpatterns = [
     path('get_data/', views.display_data, name='get_data'),
     path('display_data_html/', views.display_data, name='display_data_html'),
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
