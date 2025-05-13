@@ -202,7 +202,7 @@
                         {% if value %}
                             {% if value.photo %}
                                 <div class="card-image-container">
-                                    <img class="card-image" src="{{ MEDIA_PREFIX }}{{ value.photo|cut:'/media/' }}" alt="Photo" />
+                                    <img class="card-image popup-image" src="{{ MEDIA_PREFIX }}{{ value.photo|cut:'/media/' }}" alt="Photo" style="cursor:pointer;" />
                                 </div>
                             {% endif %}
                             <div class="card-details">
@@ -228,35 +228,37 @@
             <img id="logo-img" src="{% static 'logo.jpg' %}" alt="Powered by" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div style=\'color:red;\'>Logo not found in static folder</div>');">
         </div>
     </footer>
-    <!-- Popup Modal -->
-    <div id="logo-modal">
-        <span id="close-logo-modal">&times;</span>
-        <img src="{% static 'logo.jpg' %}" alt="Powered by">
+    <!-- Popup Modal for Card Images -->
+    <div id="img-modal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); justify-content:center; align-items:center;">
+        <span id="close-img-modal" style="position:absolute; top:18px; right:24px; font-size:36px; color:white; cursor:pointer; font-weight:bold; z-index:10001; background:rgba(0,0,0,0.2); border-radius:50%; width:40px; height:40px; line-height:38px; text-align:center; transition:background 0.2s;">&times;</span>
+        <img id="img-modal-content" src="" alt="Popup" style="max-width:90vw; max-height:70vh; border-radius:12px; box-shadow:0 4px 24px rgba(0,0,0,0.3); background:white;">
     </div>
     <script>
-        const logoImg = document.getElementById('logo-img');
-        const logoModal = document.getElementById('logo-modal');
-        const closeLogoModal = document.getElementById('close-logo-modal');
-        if (logoImg) {
-            logoImg.onclick = function() {
-                logoModal.style.display = 'flex';
+        // Card image popup logic
+        document.querySelectorAll('.popup-image').forEach(function(img) {
+            img.addEventListener('click', function() {
+                document.getElementById('img-modal-content').src = this.src;
+                document.getElementById('img-modal').style.display = 'flex';
+            });
+        });
+        document.getElementById('close-img-modal').onclick = function() {
+            document.getElementById('img-modal').style.display = 'none';
+            document.getElementById('img-modal-content').src = '';
+        };
+        document.getElementById('img-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+                document.getElementById('img-modal-content').src = '';
             }
-        }
-        if (closeLogoModal) {
-            closeLogoModal.onclick = function() {
-                logoModal.style.display = 'none';
-            }
-        }
+        });
         document.addEventListener('keydown', function(e) {
-            if (logoModal.style.display === 'flex' && (e.key === 'Escape' || e.key === 'Esc')) {
-                logoModal.style.display = 'none';
+            const modal = document.getElementById('img-modal');
+            if (modal.style.display === 'flex' && (e.key === 'Escape' || e.key === 'Esc')) {
+                modal.style.display = 'none';
+                document.getElementById('img-modal-content').src = '';
             }
         });
-        logoModal && logoModal.addEventListener('click', function(e) {
-            if (e.target === logoModal) {
-                logoModal.style.display = 'none';
-            }
-        });
+        // Remove logo popup logic
     </script>
 </body>
 </html>
