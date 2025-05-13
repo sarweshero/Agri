@@ -193,3 +193,31 @@ def clear_all_data(request):
     for model, _ in model_photo_fields:
         model.objects.all().delete()
     return Response({'message': 'All data and media files have been deleted.'}, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def display_data(request):
+    param_id = request.query_params.get('id') or request.GET.get('id')
+    if not param_id:
+        return Response({'error': 'ID parameter is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        landprep_instance = landprep.objects.filter(belongs_to=param_id).order_by('-id').first()
+        transplanting_instance = transplanting.objects.filter(belongs_to=param_id).order_by('-id').first()
+        fertilizer_instance = fertilizer.objects.filter(belongs_to=param_id).order_by('-id').first()
+        harverst_instance = harverst.objects.filter(belongs_to=param_id).order_by('-id').first()
+        packaging_instance = packaging.objects.filter(belongs_to=param_id).order_by('-id').first()
+        procurement_instance = Procurement.objects.filter(belongs_to=param_id).order_by('-id').first()
+        packing_instance = packing.objects.filter(belongs_to=param_id).order_by('-id').first()
+
+        data = {
+            'landprep': LandPrepSerializer(landprep_instance).data if landprep_instance else None,
+            'transplanting': TransplantingSerializer(transplanting_instance).data if transplanting_instance else None,
+            'fertilizer': FertilizerSerializer(fertilizer_instance).data if fertilizer_instance else None,
+            'harverst': HarverstSerializer(harverst_instance).data if harverst_instance else None,
+            'packaging': PackagingSerializer(packaging_instance).data if packaging_instance else None,
+            'procurement': ProcurementSerializer(procurement_instance).data if procurement_instance else None,
+            'packing': PackingSerializer(packing_instance).data if packing_instance else None,
+        }
+        return Response(data, status=status.HTTP_200_OK)
+    except Exception as e:
+        return Response({'error': f'An error occurred: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
