@@ -9,4 +9,5 @@ urlpatterns = [
     path('create_packaging/', views.create_packaging, name='create_packaging'),
     path('create_procurement/', views.create_procurement, name='create_procurement'),
     path('create_packing/', views.create_packing, name='create_packing'),
+    path('clear_all_data/', views.clear_all_data, name='clear_all_data'),
 ]

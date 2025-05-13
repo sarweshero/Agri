@@ -1,17 +1,8 @@
-import json
-import uuid
-import base64
-import qrcode
-from io import BytesIO
-from django.http import JsonResponse, HttpResponse, Http404
-from django.views.decorators.csrf import csrf_exempt
-from django.urls import reverse
-from django.shortcuts import render
+import os
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from icecream import ic
-from django.core.cache import cache
 from .models import *
 from .serializers import (
     LandPrepSerializer,
@@ -149,3 +140,29 @@ def create_packing(request):
             'id': packing_instance.id
         }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def clear_all_data(request):
+    # List all models and their photo fields
+    model_photo_fields = [
+        (landprep, 'photo'),
+        (transplanting, 'photo'),
+        (fertilizer, 'photo'),
+        (harverst, 'photo'),
+        (packaging, 'photo'),
+        (Procurement, 'photo'),
+        (packing, 'photo'),
+    ]
+    # Delete all media files for each model
+    for model, photo_field in model_photo_fields:
+        for obj in model.objects.all():
+            photo = getattr(obj, photo_field, None)
+            if photo and hasattr(photo, 'path') and os.path.isfile(photo.path):
+                try:
+                    os.remove(photo.path)
+                except Exception:
+                    pass
+    # Delete all records from each model
+    for model, _ in model_photo_fields:
+        model.objects.all().delete()
+    return Response({'message': 'All data and media files have been deleted.'}, status=status.HTTP_200_OK)
