@@ -180,6 +180,11 @@
                 logoModal.style.display = 'none';
             }
         }
+        document.addEventListener('keydown', function(e) {
+            if (logoModal.style.display === 'flex' && (e.key === 'Escape' || e.key === 'Esc')) {
+                logoModal.style.display = 'none';
+            }
+        });
         // Optional: close modal when clicking outside the image
         logoModal && logoModal.addEventListener('click', function(e) {
             if (e.target === logoModal) {
