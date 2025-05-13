@@ -17,18 +17,21 @@ from .serializers import (
 @api_view(['POST'])
 def create_landprep(request):
     data = request.data.copy()
-    # if a file is provided in request.FILES, prefer it over base64 data
     if 'photo' in request.FILES:
         data['photo'] = request.FILES['photo']
     param_id = request.query_params.get('id') or request.GET.get('id')
     if param_id:
         data['belongs_to'] = param_id
     ic(f"Received data for LandPrep: {data}")
-    serializer = LandPrepSerializer(data=data)
+    instance = landprep.objects.filter(belongs_to=param_id).first()
+    if instance:
+        serializer = LandPrepSerializer(instance, data=data, partial=True)
+    else:
+        serializer = LandPrepSerializer(data=data)
     if serializer.is_valid():
         landprep_instance = serializer.save()
         return Response({
-            'message': 'LandPrep instance created successfully',
+            'message': 'LandPrep instance created/updated successfully',
             'id': landprep_instance.id
         }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -42,11 +45,15 @@ def create_transplanting(request):
     if param_id:
         data['belongs_to'] = param_id
     ic(f"Received data for Transplanting: {data}")
-    serializer = TransplantingSerializer(data=data)
+    instance = transplanting.objects.filter(belongs_to=param_id).first()
+    if instance:
+        serializer = TransplantingSerializer(instance, data=data, partial=True)
+    else:
+        serializer = TransplantingSerializer(data=data)
     if serializer.is_valid():
         transplanting_instance = serializer.save()
         return Response({
-            'message': 'Transplanting instance created successfully',
+            'message': 'Transplanting instance created/updated successfully',
             'id': transplanting_instance.id
         }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -60,11 +67,15 @@ def create_fertilizer(request):
     if param_id:
         data['belongs_to'] = param_id
     ic(f"Received data for Fertilizer: {data}")
-    serializer = FertilizerSerializer(data=data)
+    instance = fertilizer.objects.filter(belongs_to=param_id).first()
+    if instance:
+        serializer = FertilizerSerializer(instance, data=data, partial=True)
+    else:
+        serializer = FertilizerSerializer(data=data)
     if serializer.is_valid():
         fertilizer_instance = serializer.save()
         return Response({
-            'message': 'Fertilizer instance created successfully',
+            'message': 'Fertilizer instance created/updated successfully',
             'id': fertilizer_instance.id
         }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -78,11 +89,15 @@ def create_harverst(request):
     if param_id:
         data['belongs_to'] = param_id
     ic(f"Received data for Harverst: {data}")
-    serializer = HarverstSerializer(data=data)
+    instance = harverst.objects.filter(belongs_to=param_id).first()
+    if instance:
+        serializer = HarverstSerializer(instance, data=data, partial=True)
+    else:
+        serializer = HarverstSerializer(data=data)
     if serializer.is_valid():
         harverst_instance = serializer.save()
         return Response({
-            'message': 'Harverst instance created successfully',
+            'message': 'Harverst instance created/updated successfully',
             'id': harverst_instance.id
         }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -96,11 +111,15 @@ def create_packaging(request):
     if param_id:
         data['belongs_to'] = param_id
     ic(f"Received data for Packaging: {data}")
-    serializer = PackagingSerializer(data=data)
+    instance = packaging.objects.filter(belongs_to=param_id).first()
+    if instance:
+        serializer = PackagingSerializer(instance, data=data, partial=True)
+    else:
+        serializer = PackagingSerializer(data=data)
     if serializer.is_valid():
         packaging_instance = serializer.save()
         return Response({
-            'message': 'Packaging instance created successfully',
+            'message': 'Packaging instance created/updated successfully',
             'id': packaging_instance.id
         }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -114,11 +133,15 @@ def create_procurement(request):
     if param_id:
         data['belongs_to'] = param_id
     ic(f"Received data for Procurement: {data}")
-    serializer = ProcurementSerializer(data=data)
+    instance = Procurement.objects.filter(belongs_to=param_id).first()
+    if instance:
+        serializer = ProcurementSerializer(instance, data=data, partial=True)
+    else:
+        serializer = ProcurementSerializer(data=data)
     if serializer.is_valid():
         procurement_instance = serializer.save()
         return Response({
-            'message': 'Procurement instance created successfully',
+            'message': 'Procurement instance created/updated successfully',
             'id': procurement_instance.id
         }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -132,11 +155,15 @@ def create_packing(request):
     if param_id:
         data['belongs_to'] = param_id
     ic(f"Received data for Packing: {data}")
-    serializer = PackingSerializer(data=data)
+    instance = packing.objects.filter(belongs_to=param_id).first()
+    if instance:
+        serializer = PackingSerializer(instance, data=data, partial=True)
+    else:
+        serializer = PackingSerializer(data=data)
     if serializer.is_valid():
         packing_instance = serializer.save()
         return Response({
-            'message': 'Packing instance created successfully',
+            'message': 'Packing instance created/updated successfully',
             'id': packing_instance.id
         }, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
