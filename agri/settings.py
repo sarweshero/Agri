@@ -20,7 +20,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-s%y$&%#g7&@92+e+eh+tbgs95-h87d&k0^b$!fif$n6wd77k^&'
 
@@ -48,8 +47,6 @@ INSTALLED_APPS = [
 
 # CORS configuration
 CORS_ALLOW_ALL_ORIGINS = True
-
-
 CORS_ALLOW_CREDENTIALS = True
 
 MIDDLEWARE = [
@@ -69,7 +66,6 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
-
 }
 
 ROOT_URLCONF = 'agri.urls'
@@ -135,7 +131,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -147,14 +142,15 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+STATICFILES_DIRS = [
+    r'F:\Agri\static',
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -162,7 +158,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 from dotenv import load_dotenv
-
 load_dotenv()
 
 import os

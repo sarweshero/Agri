@@ -83,6 +83,15 @@
             font-style: italic;
             min-height: 100px;
         }
+        footer {
+            margin-top: 40px;
+            text-align: center;
+        }
+        footer img {
+            margin-top: 8px;
+            max-width: 180px;
+            height: auto;
+        }
     </style>
 </head>
 <body>
@@ -118,5 +127,10 @@
             {% endfor %}
         </div>
     </div>
+    <footer>
+        <div>
+            <img src="{% static 'logo.jpg' %}" alt="Powered by" style="margin-top:8px; max-width:180px; height:auto;" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<div style=\'color:red;\'>Logo not found in static folder</div>');">
+        </div>
+    </footer>
 </body>
 </html>

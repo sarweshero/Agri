@@ -38,6 +38,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         return self.phone_number
 
 class landprep(models.Model):
+    farmer_name = models.CharField(max_length=100)
+    cultivation_area = models.CharField(max_length=100)
     date = models.DateField()
     fertilizer = models.CharField()
     quantity = models.IntegerField()
@@ -57,6 +59,7 @@ class transplanting(models.Model):
 class fertilizer(models.Model):
     date = models.DateField()
     application_type = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
     quantity = models.IntegerField()
     photo = models.ImageField(upload_to='fertilizer_photos/')
     belongs_to = models.IntegerField()
@@ -79,12 +82,13 @@ class packaging(models.Model):
         return f"Packaging on {self.date} with quantity {self.quantity}"
     
 class Procurement(models.Model):
+    procurer_name = models.CharField(max_length=100)
     farmer_name = models.CharField(max_length=100)
     seed_variety = models.CharField(max_length=100)
     lot_id = models.CharField(max_length=100)
     date = models.DateField()
     quantity = models.IntegerField()
-    price = models.IntegerField()
+    avg_price = models.IntegerField()
     photo = models.ImageField(upload_to='procurement_photos/')
     belongs_to = models.IntegerField()
     def __str__(self):
@@ -92,6 +96,7 @@ class Procurement(models.Model):
 class packing(models.Model):
     lot_id = models.CharField(max_length=100)
     date = models.DateField()
+    avg_sale_price = models.IntegerField()
     quantity = models.IntegerField()
     photo = models.ImageField(upload_to='packing_photos/')
     belongs_to = models.IntegerField()
