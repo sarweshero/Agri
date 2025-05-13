@@ -1,10 +1,12 @@
 from django.urls import path
 from . import views
-from django.core.cache import cache  # New import for shared storage
-from icecream import ic  # Assuming you are using icecream for debugging
-from .models import *  # Import your models including LandPrep
+
 urlpatterns = [
-    path('generate_qr/', views.generate_qr, name='generate_qr'),
-    path('display_data/<str:data_id>/', views.display_data, name='display_data'),
     path('create_landprep/', views.create_landprep, name='create_landprep'),
+    path('create_transplanting/', views.create_transplanting, name='create_transplanting'),
+    path('create_fertilizer/', views.create_fertilizer, name='create_fertilizer'),
+    path('create_harverst/', views.create_harverst, name='create_harverst'),
+    path('create_packaging/', views.create_packaging, name='create_packaging'),
+    path('create_procurement/', views.create_procurement, name='create_procurement'),
+    path('create_packing/', views.create_packing, name='create_packing'),
 ]
