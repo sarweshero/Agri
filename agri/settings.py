@@ -49,6 +49,14 @@ INSTALLED_APPS = [
 # CORS configuration
 CORS_ALLOW_ALL_ORIGINS = True
 
+CORS_ALLOWED_ORIGINS = [
+    "https://beautiful-sprite-a637b1.netlify.app",
+]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://.*\.netlify\.app$",
+]
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',  # should be at the top
     'django_user_agents.middleware.UserAgentMiddleware',
