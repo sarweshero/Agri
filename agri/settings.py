@@ -50,11 +50,11 @@ INSTALLED_APPS = [
 CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOWED_ORIGINS = [
-    "https://beautiful-sprite-a637b1.netlify.app",
+    '*',
 ]
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
-    r"^https://.*\.netlify\.app$",
+   '*',
 ]
 CORS_ALLOW_METHODS = [
     "GET",

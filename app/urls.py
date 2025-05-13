@@ -11,4 +11,5 @@ urlpatterns = [
     path('create_packing/', views.create_packing, name='create_packing'),
     path('clear_all_data/', views.clear_all_data, name='clear_all_data'),
     path('get_data/', views.display_data, name='get_data'),
+    path('display_data_html/', views.display_data, name='display_data_html'),
 ]

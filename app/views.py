@@ -3,6 +3,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from icecream import ic
+from django.shortcuts import render
 from .models import *
 from .serializers import (
     LandPrepSerializer,
@@ -218,6 +219,12 @@ def display_data(request):
             'procurement': ProcurementSerializer(procurement_instance).data if procurement_instance else None,
             'packing': PackingSerializer(packing_instance).data if packing_instance else None,
         }
+
+        # If the request is for HTML, render the template
+        if request.accepted_renderer.format == 'html' or request.GET.get('html') == '1':
+            return render(request, 'display_data.html', {'data': data})
+
+        # Otherwise, return JSON as before
         return Response(data, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({'error': f'An error occurred: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

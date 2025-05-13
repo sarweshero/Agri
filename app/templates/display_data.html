@@ -6,16 +6,26 @@
 <body>
     <h1>Stored Data</h1>
     <ul>
-        {% for key, value in data.items %}
-            {% if key == 'photoBase64s' %}
-                {% for photo in value %}
-                    <li>
-                        <img src="data:image/jpeg;base64,{{ photo }}" alt="Image"/>
-                    </li>
-                {% endfor %}
-            {% else %}
-                <li>{{ key }}: {{ value }}</li>
-            {% endif %}
+        {% for section, value in data.items %}
+            <li>
+                <h2>{{ section|capfirst }}</h2>
+                {% if value %}
+                    <ul>
+                        {% for key, field in value.items %}
+                            {% if key == "photo" and field %}
+                                <li>
+                                    <strong>{{ key|capfirst }}:</strong>
+                                    <img src="{{ field.url }}" alt="Image" style="max-width:200px;"/>
+                                </li>
+                            {% else %}
+                                <li><strong>{{ key|capfirst }}:</strong> {{ field }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <em>No data</em>
+                {% endif %}
+            </li>
         {% endfor %}
     </ul>
 </body>
