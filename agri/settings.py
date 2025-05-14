@@ -147,6 +147,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
 
 # For production (collectstatic will copy files here)
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
