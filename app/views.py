@@ -228,3 +228,80 @@ def display_data(request):
         return Response(data, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({'error': f'An error occurred: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@api_view(['GET'])
+def get_landprep(request):
+    param_id = request.query_params.get('id') or request.GET.get('id')
+    if not param_id:
+        return Response({'error': 'ID parameter is required'}, status=status.HTTP_400_BAD_REQUEST)
+    instance = landprep.objects.filter(belongs_to=param_id).order_by('-id').first()
+    if instance:
+        serializer = LandPrepSerializer(instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response({'error': 'No LandPrep data found'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+def get_transplanting(request):
+    param_id = request.query_params.get('id') or request.GET.get('id')
+    if not param_id:
+        return Response({'error': 'ID parameter is required'}, status=status.HTTP_400_BAD_REQUEST)
+    instance = transplanting.objects.filter(belongs_to=param_id).order_by('-id').first()
+    if instance:
+        serializer = TransplantingSerializer(instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response({'error': 'No Transplanting data found'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+def get_fertilizer(request):
+    param_id = request.query_params.get('id') or request.GET.get('id')
+    if not param_id:
+        return Response({'error': 'ID parameter is required'}, status=status.HTTP_400_BAD_REQUEST)
+    instance = fertilizer.objects.filter(belongs_to=param_id).order_by('-id').first()
+    if instance:
+        serializer = FertilizerSerializer(instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response({'error': 'No Fertilizer data found'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+def get_harverst(request):
+    param_id = request.query_params.get('id') or request.GET.get('id')
+    if not param_id:
+        return Response({'error': 'ID parameter is required'}, status=status.HTTP_400_BAD_REQUEST)
+    instance = harverst.objects.filter(belongs_to=param_id).order_by('-id').first()
+    if instance:
+        serializer = HarverstSerializer(instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response({'error': 'No Harverst data found'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+def get_packaging(request):
+    param_id = request.query_params.get('id') or request.GET.get('id')
+    if not param_id:
+        return Response({'error': 'ID parameter is required'}, status=status.HTTP_400_BAD_REQUEST)
+    instance = packaging.objects.filter(belongs_to=param_id).order_by('-id').first()
+    if instance:
+        serializer = PackagingSerializer(instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response({'error': 'No Packaging data found'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+def get_procurement(request):
+    param_id = request.query_params.get('id') or request.GET.get('id')
+    if not param_id:
+        return Response({'error': 'ID parameter is required'}, status=status.HTTP_400_BAD_REQUEST)
+    instance = Procurement.objects.filter(belongs_to=param_id).order_by('-id').first()
+    if instance:
+        serializer = ProcurementSerializer(instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response({'error': 'No Procurement data found'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+def get_packing(request):
+    param_id = request.query_params.get('id') or request.GET.get('id')
+    if not param_id:
+        return Response({'error': 'ID parameter is required'}, status=status.HTTP_400_BAD_REQUEST)
+    instance = packing.objects.filter(belongs_to=param_id).order_by('-id').first()
+    if instance:
+        serializer = PackingSerializer(instance)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    return Response({'error': 'No Packing data found'}, status=status.HTTP_404_NOT_FOUND)
