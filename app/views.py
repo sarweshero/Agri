@@ -256,7 +256,7 @@ def get_transplanting(request):
             instance.save()
         serializer = TransplantingSerializer(instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    return Response({'error': 'No Transplanting data found'}, status=status.HTTP_404_NOT_FOUND)
+    return Response(None, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def get_fertilizer(request):
@@ -270,7 +270,7 @@ def get_fertilizer(request):
             instance.save()
         serializer = FertilizerSerializer(instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    return Response({'error': 'No Fertilizer data found'}, status=status.HTTP_404_NOT_FOUND)
+    return Response(None, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def get_harverst(request):
@@ -284,7 +284,7 @@ def get_harverst(request):
             instance.save()
         serializer = HarverstSerializer(instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    return Response({'error': 'No Harverst data found'}, status=status.HTTP_404_NOT_FOUND)
+    return Response(None, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def get_packaging(request):
@@ -298,7 +298,7 @@ def get_packaging(request):
             instance.save()
         serializer = PackagingSerializer(instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    return Response({'error': 'No Packaging data found'}, status=status.HTTP_404_NOT_FOUND)
+    return Response(None, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def get_procurement(request):
@@ -312,7 +312,7 @@ def get_procurement(request):
             instance.save()
         serializer = ProcurementSerializer(instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    return Response({'error': 'No Procurement data found'}, status=status.HTTP_404_NOT_FOUND)
+    return Response(None, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def get_packing(request):
@@ -326,4 +326,4 @@ def get_packing(request):
             instance.save()
         serializer = PackingSerializer(instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    return Response({'error': 'No Packing data found'}, status=status.HTTP_404_NOT_FOUND)
+    return Response(None, status=status.HTTP_200_OK)
