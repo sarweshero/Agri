@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from icecream import ic
 from django.shortcuts import render
+from django.utils import timezone
 from .models import *
 from .serializers import (
     LandPrepSerializer,
@@ -236,9 +237,12 @@ def get_landprep(request):
         return Response({'error': 'ID parameter is required'}, status=status.HTTP_400_BAD_REQUEST)
     instance = landprep.objects.filter(belongs_to=param_id).order_by('-id').first()
     if instance:
+        if not instance.is_completed and instance.date <= timezone.now().date():
+            instance.is_completed = True
+            instance.save()
         serializer = LandPrepSerializer(instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
-    return Response({'error': 'No LandPrep data found'}, status=status.HTTP_404_NOT_FOUND)
+    return Response(None, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 def get_transplanting(request):
@@ -247,6 +251,9 @@ def get_transplanting(request):
         return Response({'error': 'ID parameter is required'}, status=status.HTTP_400_BAD_REQUEST)
     instance = transplanting.objects.filter(belongs_to=param_id).order_by('-id').first()
     if instance:
+        if not instance.is_completed and instance.date <= timezone.now().date():
+            instance.is_completed = True
+            instance.save()
         serializer = TransplantingSerializer(instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
     return Response({'error': 'No Transplanting data found'}, status=status.HTTP_404_NOT_FOUND)
@@ -258,6 +265,9 @@ def get_fertilizer(request):
         return Response({'error': 'ID parameter is required'}, status=status.HTTP_400_BAD_REQUEST)
     instance = fertilizer.objects.filter(belongs_to=param_id).order_by('-id').first()
     if instance:
+        if not instance.is_completed and instance.date <= timezone.now().date():
+            instance.is_completed = True
+            instance.save()
         serializer = FertilizerSerializer(instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
     return Response({'error': 'No Fertilizer data found'}, status=status.HTTP_404_NOT_FOUND)
@@ -269,6 +279,9 @@ def get_harverst(request):
         return Response({'error': 'ID parameter is required'}, status=status.HTTP_400_BAD_REQUEST)
     instance = harverst.objects.filter(belongs_to=param_id).order_by('-id').first()
     if instance:
+        if not instance.is_completed and instance.date <= timezone.now().date():
+            instance.is_completed = True
+            instance.save()
         serializer = HarverstSerializer(instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
     return Response({'error': 'No Harverst data found'}, status=status.HTTP_404_NOT_FOUND)
@@ -280,6 +293,9 @@ def get_packaging(request):
         return Response({'error': 'ID parameter is required'}, status=status.HTTP_400_BAD_REQUEST)
     instance = packaging.objects.filter(belongs_to=param_id).order_by('-id').first()
     if instance:
+        if not instance.is_completed and instance.date <= timezone.now().date():
+            instance.is_completed = True
+            instance.save()
         serializer = PackagingSerializer(instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
     return Response({'error': 'No Packaging data found'}, status=status.HTTP_404_NOT_FOUND)
@@ -291,6 +307,9 @@ def get_procurement(request):
         return Response({'error': 'ID parameter is required'}, status=status.HTTP_400_BAD_REQUEST)
     instance = Procurement.objects.filter(belongs_to=param_id).order_by('-id').first()
     if instance:
+        if not instance.is_completed and instance.date <= timezone.now().date():
+            instance.is_completed = True
+            instance.save()
         serializer = ProcurementSerializer(instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
     return Response({'error': 'No Procurement data found'}, status=status.HTTP_404_NOT_FOUND)
@@ -302,6 +321,9 @@ def get_packing(request):
         return Response({'error': 'ID parameter is required'}, status=status.HTTP_400_BAD_REQUEST)
     instance = packing.objects.filter(belongs_to=param_id).order_by('-id').first()
     if instance:
+        if not instance.is_completed and instance.date <= timezone.now().date():
+            instance.is_completed = True
+            instance.save()
         serializer = PackingSerializer(instance)
         return Response(serializer.data, status=status.HTTP_200_OK)
     return Response({'error': 'No Packing data found'}, status=status.HTTP_404_NOT_FOUND)
